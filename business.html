@@ -4,63 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>(주)일정 - 사업분야</title>
+    <!-- 공통 CSS 연결 -->
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f6f8;
-            color: #333;
-        }
-        header {
-            background-color: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 40px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50;
-            text-decoration: none;
-        }
-        nav {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-        nav a {
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            font-size: 15px;
-        }
-        nav a:hover { color: #0066cc; }
-        nav a.home-btn {
-            background-color: #2c3e50;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-        }
-        nav a.home-btn:hover { background-color: #1a252f; }
-
-        .main-container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .content-card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        h1 { color: #2c3e50; margin-top: 0; }
+        /* business.html 전용 스타일 */
         .business-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -73,7 +20,10 @@
             border-radius: 8px;
             border: 1px solid #e5e7eb;
         }
-        .business-item h3 { color: #0066cc; margin-top: 0; }
+        .business-item h3 {
+            color: #0066cc;
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +32,7 @@
     <header>
         <a href="index.html" class="logo">(주)일정</a>
         <nav>
-            <a href="business.html" style="color: #0066cc; font-weight: bold;">사업분야</a>
+            <a href="business.html" class="active">사업분야</a>
             <a href="about.html">회사소개</a>
             <a href="index.html" class="home-btn">Home</a>
         </nav>
