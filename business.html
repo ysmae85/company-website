@@ -6,6 +6,8 @@
     <title>(주)일정 - 사업분야</title>
     <!-- 공통 CSS 연결 -->
     <link rel="stylesheet" href="style.css">
+    <!-- 파비콘 연결 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         /* business.html 전용 스타일 */
         .business-grid {
@@ -15,13 +17,13 @@
             margin-top: 30px;
         }
         .business-item {
-            background: #f9fafb;
+            background: #f7f9f8;
             padding: 20px;
             border-radius: 8px;
-            border: 1px solid #e5e7eb;
+            border: 1px solid #d8e3dc;
         }
         .business-item h3 {
-            color: #0066cc;
+            color: #40916c;
             margin-top: 0;
         }
     </style>
@@ -30,11 +32,16 @@
 
     <!-- 상단 네비게이션 바 -->
     <header>
-        <a href="index.html" class="logo">(주)일정</a>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="(주)일정 로고">
+            (주)일정
+        </a>
         <nav>
             <a href="business.html" class="active">사업분야</a>
             <a href="about.html">회사소개</a>
             <a href="index.html" class="home-btn">Home</a>
+            <!-- 영문 사업분야 페이지로 이동 -->
+            <a href="en/business.html" style="font-weight: bold; color: #2e6f40; margin-left: 10px;">ENG</a>
         </nav>
     </header>
 
