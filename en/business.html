@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)일정 - Business</title>
+    <!-- 상위 폴더의 공통 CSS 연결 -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- 상위 폴더의 파비콘 연결 -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <style>
+        /* en/business.html 전용 스타일 */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .business-item {
+            background: #f7f9f8;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #d8e3dc;
+        }
+        .business-item h3 {
+            color: #40916c;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 네비게이션 바 -->
+    <header>
+        <a href="index.html" class="logo">
+            <img src="../logo.png" alt="(주)일정 로고">
+            (주)일정
+        </a>
+        <nav>
+            <a href="business.html" class="active">Business</a>
+            <a href="about.html">About Us</a>
+            <a href="index.html" class="home-btn">Home</a>
+            <!-- 한국어 사업분야 페이지로 이동 -->
+            <a href="../business.html" style="font-weight: bold; color: #2e6f40; margin-left: 10px;">KOR</a>
+        </nav>
+    </header>
+
+    <!-- 본문 내용 -->
+    <div class="main-container">
+        <div class="content-card">
+            <h1>Business Area</h1>
+            <p>Introducing the core services and business areas provided by ILJEONG Co., Ltd.</p>
+            
+            <div class="business-grid">
+                <div class="business-item">
+                    <h3>01. Core Business Area A</h3>
+                    <p>Providing customized client solutions and related consulting services.</p>
+                </div>
+                <div class="business-item">
+                    <h3>02. Core Business Area B</h3>
+                    <p>Supporting innovative technology adoption and efficient process building.</p>
+                </div>
+                <div class="business-item">
+                    <h3>03. Value-added Service C</h3>
+                    <p>Delivering continuous after-sales management and reliable maintenance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
