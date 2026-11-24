@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)일정 - Home</title>
+    
+    <!-- ★ 상위 폴더에 있는 공통 CSS 연결 -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- ★ 상위 폴더에 있는 파비콘 연결 (필요시 사용) -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+
+    <style>
+        /* en/index.html 전용 스타일 */
+        .hero-image-box {
+            width: 100%;
+            height: 450px;
+            background-color: #e9f0ec;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #52796f;
+            text-align: center;
+            border: 2px dashed #b7d5c4;
+            margin-bottom: 30px;
+        }
+        .hero-image-box h2 {
+            margin: 0 0 10px 0;
+            font-size: 24px;
+            color: #2e6f40;
+        }
+        .hero-image-box p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 상단 네비게이션 바 -->
+    <header>
+        <!-- ★ 상위 폴더 기준의 로고 및 링크 설정 -->
+        <a href="index.html" class="logo">
+            <img src="../logo.png" alt="(주)일정 로고">
+            (주)일정
+        </a>
+
+        <!-- 영문 메뉴 목록 -->
+        <nav>
+            <a href="business.html">Business</a>
+            <a href="about.html">About Us</a>
+            <a href="index.html" class="home-btn">Home</a>
+            
+            <!-- 국문 페이지로 돌아가는 언어 전환 버튼 -->
+            <a href="../index.html" style="font-weight: bold; color: #2e6f40; margin-left: 10px;">KOR</a>
+        </nav>
+    </header>
+
+    <!-- 메인 화면 콘텐츠 -->
+    <div class="main-container">
+        
+        <!-- 회사 전경 사진 자리 -->
+        <div class="hero-image-box">
+            <h2>🏢 Company Building Photo Placeholder</h2>
+            <p>Real corporate building or landscape photos will be uploaded here later.</p>
+        </div>
+
+        <!-- 환영 문구 및 소개 (영문) -->
+        <div class="content-card" style="text-align: center;">
+            <h1>Welcome to ILJEONG Co., Ltd.</h1>
+            <p>We are ILJEONG, a company that grows with our customers and prioritizes trust above all.</p>
+            <p>You can check our business fields and company introduction through the menu above.</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
