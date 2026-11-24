@@ -6,11 +6,13 @@
     <title>(주)일정 - 회사소개</title>
     <!-- 공통 CSS 연결 -->
     <link rel="stylesheet" href="style.css">
+    <!-- 파비콘 연결 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         /* about.html 전용 스타일 */
         .ceo-message {
-            background: #f9fafb;
-            border-left: 4px solid #2c3e50;
+            background: #f7f9f8;
+            border-left: 4px solid #2e6f40;
             padding: 20px;
             margin-top: 20px;
             font-style: italic;
@@ -21,11 +23,16 @@
 
     <!-- 상단 네비게이션 바 -->
     <header>
-        <a href="index.html" class="logo">(주)일정</a>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="(주)일정 로고">
+            (주)일정
+        </a>
         <nav>
             <a href="business.html">사업분야</a>
             <a href="about.html" class="active">회사소개</a>
             <a href="index.html" class="home-btn">Home</a>
+            <!-- 영문 회사소개 페이지로 이동 -->
+            <a href="en/about.html" style="font-weight: bold; color: #2e6f40; margin-left: 10px;">ENG</a>
         </nav>
     </header>
 
