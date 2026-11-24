@@ -5,7 +5,7 @@ body {
     font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f6f8;
+    background-color: #f4f6f5; /* 은은한 연두빛이 살짝 감도는 차분한 배경색 */
     color: #333;
 }
 
@@ -26,11 +26,14 @@ header {
 .logo {
     font-size: 20px;
     font-weight: bold;
-    color: #2c3e50;
+    color: #2e6f40; /* 로고 텍스트도 그린 톤으로 맞춤 */
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 .logo img {
-    height: 35px;
+    height: 38px; /* 로고 이미지 크기 조절 */
     vertical-align: middle;
 }
 
@@ -50,24 +53,24 @@ nav a {
 }
 
 nav a:hover {
-    color: #0066cc;
+    color: #2e6f40; /* 마우스 올렸을 때 초록색 */
 }
 
 /* 현재 선택된 메뉴 활성화 표시 */
 nav a.active {
-    color: #0066cc;
+    color: #2e6f40;
     font-weight: bold;
 }
 
-/* 특별히 강조할 Home 버튼 스타일 */
+/* 특별히 강조할 Home 버튼 스타일 (로고 진한 녹색 적용) */
 nav a.home-btn {
-    background-color: #2c3e50;
+    background-color: #2e6f40;
     color: white;
     padding: 8px 15px;
     border-radius: 4px;
 }
 nav a.home-btn:hover {
-    background-color: #1a252f;
+    background-color: #1f4b2b; /* 마우스 올렸을 때 더 진한 초록 */
     color: white;
 }
 
@@ -87,6 +90,6 @@ nav a.home-btn:hover {
 }
 
 h1 {
-    color: #2c3e50;
+    color: #2e6f40; /* 제목도 로고 색상과 통일 */
     margin-top: 0;
 }
