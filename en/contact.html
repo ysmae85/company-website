@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)일정 - Contact Us</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <style>
+        .contact-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .contact-form label { font-weight: bold; color: #2e6f40; }
+        .contact-form input, .contact-form textarea {
+            padding: 12px; border: 1px solid #d8e3dc; border-radius: 6px; font-size: 15px; width: 100%; box-sizing: border-box;
+        }
+        .contact-form textarea { resize: vertical; height: 150px; }
+        .contact-form button {
+            background-color: #2e6f40; color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s;
+        }
+        .contact-form button:hover { background-color: #1f4b2b; }
+        .honeypot { display: none !important; }
+        #response-msg { margin-top: 15px; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="../logo.png" alt="(주)일정 로고">
+            (주)일정
+        </a>
+        <nav>
+            <a href="business.html">Business</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html" class="active">Contact Us</a>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="../contact.html" style="font-weight: bold; color: #2e6f40; margin-left: 10px;">KOR</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="content-card">
+            <h1>Contact Us</h1>
+            <p>If you have any questions or collaboration proposals, please leave them below.</p>
+            
+            <form id="contactForm" class="contact-form">
+                <div class="honeypot">
+                    <label>Website</label>
+                    <input type="text" id="website" name="website" autocomplete="off">
+                </div>
+
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your name">
+                
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                
+                <label for="message">Message</label>
+                <textarea id="message" name="message" required placeholder="Enter your message in detail"></textarea>
+                
+                <label for="captcha" id="captcha-label">Security Check: Solve the math problem (Loading...)</label>
+                <input type="number" id="captcha" name="captcha" required placeholder="Enter the answer">
+
+                <button type="submit" id="submit-btn">Send Message</button>
+            </form>
+            <div id="response-msg"></div>
+        </div>
+    </div>
+
+    <script>
+        let num1 = Math.floor(Math.random() * 8) + 2;
+        let num2 = Math.floor(Math.random() * 8) + 2;
+        let correctAnswer = num1 + num2;
+        document.getElementById('captcha-label').textContent = `Security Check: What is ${num1} + ${num2}?`;
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const msgBox = document.getElementById('response-msg');
+            const btn = document.getElementById('submit-btn');
+
+            const userCaptcha = parseInt(document.getElementById('captcha').value);
+            if (userCaptcha !== correctAnswer) {
+                msgBox.style.color = "red";
+                msgBox.textContent = "Incorrect security answer. Please try again.";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = "Sending...";
+            msgBox.textContent = "";
+
+            try {
+                let ip = "UNKNOWN_IP";
+                try {
+                    const ipRes = await fetch('https://api.ipify.org?format=json');
+                    const ipData = await ipRes.json();
+                    ip = ipData.ip;
+                } catch(err) { console.log("IP fetch failed"); }
+
+                let browserId = localStorage.getItem('iljeong_client_id');
+                if (!browserId) {
+                    browserId = 'BID_' + Math.random().toString(36).substring(2) + Date.now();
+                    localStorage.setItem('iljeong_client_id', browserId);
+                }
+
+                const clientKey = ip + "_" + browserId;
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                    website: document.getElementById('website').value,
+                    clientKey: clientKey
+                };
+
+                const GAS_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE"; 
+
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    msgBox.style.color = "#2e6f40";
+                    msgBox.textContent = result.message;
+                    document.getElementById('contactForm').reset();
+                } else {
+                    msgBox.style.color = "red";
+                    msgBox.textContent = result.message;
+                }
+
+            } catch (err) {
+                msgBox.style.color = "red";
+                msgBox.textContent = "An error occurred. Please try again later.";
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Send Message";
+            }
+        });
+    </script>
+</body>
+</html>
