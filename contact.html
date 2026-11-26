@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(주)일정 - 문의하기</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .contact-form { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .contact-form label { font-weight: bold; color: #2e6f40; }
+        .contact-form input, .contact-form textarea {
+            padding: 12px; border: 1px solid #d8e3dc; border-radius: 6px; font-size: 15px; width: 100%; box-sizing: border-box;
+        }
+        .contact-form textarea { resize: vertical; height: 150px; }
+        .contact-form button {
+            background-color: #2e6f40; color: white; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s;
+        }
+        .contact-form button:hover { background-color: #1f4b2b; }
+        .honeypot { display: none !important; }
+        #response-msg { margin-top: 15px; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">
+            <img src="logo.png" alt="(주)일정 로고">
+            (주)일정
+        </a>
+        <nav>
+            <a href="business.html">사업분야</a>
+            <a href="about.html">회사소개</a>
+            <a href="contact.html" class="active">문의하기</a>
+            <a href="index.html" class="home-btn">Home</a>
+            <a href="en/contact.html" style="font-weight: bold; color: #2e6f40; margin-left: 10px;">ENG</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="content-card">
+            <h1>문의하기</h1>
+            <p>궁금하신 점이나 협력 제안을 남겨주시면 신속하게 답변해 드리겠습니다.</p>
+            
+            <form id="contactForm" class="contact-form">
+                <!-- 스팸 봇 방지용 허니팟 필드 (일반 사용자는 안 보임) -->
+                <div class="honeypot">
+                    <label>Website</label>
+                    <input type="text" id="website" name="website" autocomplete="off">
+                </div>
+
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required placeholder="성함을 입력하세요">
+                
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required placeholder="답변 받을 이메일 주소를 입력하세요">
+                
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" required placeholder="문의하실 내용을 상세히 적어주세요"></textarea>
+                
+                <!-- 간단한 연산 캡차 -->
+                <label for="captcha" id="captcha-label">보안 인증: 다음 덧셈의 답을 입력하세요 (계산 중...)</label>
+                <input type="number" id="captcha" name="captcha" required placeholder="정답을 입력하세요">
+
+                <button type="submit" id="submit-btn">문의 전송하기</button>
+            </form>
+            <div id="response-msg"></div>
+        </div>
+    </div>
+
+    <script>
+        // 간단한 무작위 덧셈 캡차 생성
+        let num1 = Math.floor(Math.random() * 8) + 2;
+        let num2 = Math.floor(Math.random() * 8) + 2;
+        let correctAnswer = num1 + num2;
+        document.getElementById('captcha-label').textContent = `보안 인증: ${num1} + ${num2} = ? 의 결과는?`;
+
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const msgBox = document.getElementById('response-msg');
+            const btn = document.getElementById('submit-btn');
+
+            // 캡차 검증
+            const userCaptcha = parseInt(document.getElementById('captcha').value);
+            if (userCaptcha !== correctAnswer) {
+                msgBox.style.color = "red";
+                msgBox.textContent = "보안 인증 답이 틀렸습니다. 다시 확인해주세요.";
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = "전송 중...";
+            msgBox.textContent = "";
+
+            try {
+                // 공인 IP 조회
+                let ip = "UNKNOWN_IP";
+                try {
+                    const ipRes = await fetch('https://api.ipify.org?format=json');
+                    const ipData = await ipRes.json();
+                    ip = ipData.ip;
+                } catch(err) { console.log("IP fetch failed"); }
+
+                // 브라우저 고유 ID 생성 또는 로드
+                let browserId = localStorage.getItem('iljeong_client_id');
+                if (!browserId) {
+                    browserId = 'BID_' + Math.random().toString(36).substring(2) + Date.now();
+                    localStorage.setItem('iljeong_client_id', browserId);
+                }
+
+                const clientKey = ip + "_" + browserId;
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value,
+                    website: document.getElementById('website').value, // 허니팟 체크용
+                    clientKey: clientKey
+                };
+
+                // ★ 배포한 Google Apps Script 웹앱 URL 입력
+                const GAS_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE"; 
+
+                const response = await fetch(GAS_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    msgBox.style.color = "#2e6f40";
+                    msgBox.textContent = result.message;
+                    document.getElementById('contactForm').reset();
+                } else {
+                    msgBox.style.color = "red";
+                    msgBox.textContent = result.message;
+                }
+
+            } catch (err) {
+                msgBox.style.color = "red";
+                msgBox.textContent = "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "문의 전송하기";
+            }
+        });
+    </script>
+</body>
+</html>
